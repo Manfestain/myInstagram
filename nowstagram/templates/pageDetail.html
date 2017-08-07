@@ -43,8 +43,13 @@
             {% endfor %}
             <section class="discuss-edit">
                 <a class="icon-heart-empty"></a>
-                <form>
-                    <input placeholder="添加评论..." type="text">
+                <form action="/addcomment/{{image.id}}/{{current_user.id}}/">
+                    {% if ( msg|length > 0) %}
+                    <input placeholder="{{msg}}" type="text" name="comments">
+                    {% else %}
+                    <input placeholder="添加评论..." type="text" name="comments">
+                    {% endif %}
+                    <button>提交</button>
                 </form>
                 <button class="more-info">更多选项</button>
             </section>

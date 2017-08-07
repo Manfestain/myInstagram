@@ -12,8 +12,7 @@ def get_image_url():
 
 @manager.command
 def init_database():
-    db.drop_all()
-    db.create_all()
+
 
     for i in range(0, 10):   # 添加用户
         db.session.add(User('user' + str(i), 'a' + str(i)))
@@ -33,6 +32,16 @@ def init_database():
 
     image = Image.query.get(26)
     image.url = 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1268348955,3754655044&fm=26&gp=0.jpg'
+    db.session.commit()
+
+    for i in range(0, 10):
+        image = Image(get_image_url(), 10)
+        db.session.add(image)
+        db.session.commit()
+
+    xx_url = 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1268348955,3754655044&fm=26&gp=0.jpg'
+    xx_image = Image(xx_url, 11)
+    db.session.add(xx_image)
     db.session.commit()
 
 

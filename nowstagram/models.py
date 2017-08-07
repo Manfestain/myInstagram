@@ -1,6 +1,6 @@
 # _*_ coding:utf-8 _*_
 
-from nowstagram import db
+from nowstagram import db, login_manager
 import random
 import datetime
 
@@ -42,14 +42,38 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(80), unique=True)
     password = db.Column(db.String(32))
+    salt = db.Column(db.String(32))
     head_url = db.Column(db.String(512))
+    # mail = db.Column(db.String(32))
+    # checked = db.Column(db.Integer())   # 默认为0，表示未激活
     images = db.relationship('Image', backref='user', lazy='dynamic')
     comment = db.relationship('Comment')
 
-    def __init__(self, username, password):
+    def __init__(self, username, password,  salt=''):
         self.username = username
         self.password = password
+        self.salt = salt
+        # self.checked = 0  # 表示邮箱未认证
         self.head_url = 'http://images.nowcoder.com/head/' + str(random.randint(0, 1000)) + 'm.png'
 
     def __repr__(self):
         return '<User %d:  %s>' % (self.id, self.username)
+
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
