@@ -5,7 +5,7 @@ import qiniu.config
 
 # 我的Access Key和Secret Key
 access_key = 'MfT21ftBASo_9N1dJ7d-nk--HnjKY3tjVemTH1I2'
-secret_key = '6aJgMo5TbP6D5XTe9IXLMnQR3sDXJzkpi-JcfJrO'
+secret_key = '****************************************'
 
 # 构建鉴权对象
 q = Auth(access_key, secret_key)
